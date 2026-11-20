@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PC Atelier: кастомные ПК с 3D-витриной</title>
+<meta name="description" content="Сборка игровых и рабочих ПК на заказ. Покрутите свою модель в 3D до покупки.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head>
+<body>
+<div class="bg" aria-hidden="true"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i><i class="grid"></i><i class="noise"></i></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="logo" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M16 3l11 6v14l-11 6-11-6V9z"/><path d="M5 9l11 6 11-6M16 15v14"/></symbol>
+<symbol id="sketch" viewBox="0 0 320 260" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<rect x="70" y="24" width="190" height="200" rx="12"/><rect x="80" y="34" width="170" height="180" rx="6" stroke-dasharray="3 5" opacity=".5"/>
+<circle cx="104" cy="68" r="17"/><circle cx="104" cy="116" r="17"/><circle cx="104" cy="164" r="17"/>
+<path d="M104 51v34M87 68h34M104 99v34M87 116h34M104 147v34M87 164h34" opacity=".4"/>
+<circle cx="170" cy="68" r="15"/><circle cx="170" cy="68" r="6"/>
+<rect x="140" y="110" width="100" height="48" rx="6"/><circle cx="165" cy="134" r="14"/><circle cx="215" cy="134" r="14"/>
+<rect x="140" y="172" width="100" height="32" rx="4"/>
+<path class="flow" d="M8 68h50M8 116h50M8 164h50M262 50h46M262 116h50"/>
+<path d="M52 62l7 6-7 6M52 110l7 6-7 6M52 158l7 6-7 6M304 110l7 6-7 6"/>
+<path d="M70 240h190M70 235v10M260 235v10" opacity=".6"/>
+<text x="165" y="256" text-anchor="middle" font-size="10" fill="currentColor" stroke="none" font-family="JetBrains Mono,monospace">450 мм</text>
+</symbol>
+</defs></svg>
+
+<header class="top">
+  <a class="logo" href="#top"><svg><use href="#logo"/></svg>PC Atelier</a>
+  <nav><a href="#showroom">3D-витрина</a><a href="#tasks">Подбор по задаче</a><a href="#trust">Гарантии</a></nav>
+  <a class="btn sm" href="#order">Оставить заявку</a>
+</header>
+
+<main>
+<section class="hero" id="top">
+  <div>
+    <h1>PC Atelier</h1>
+    <p class="lead">Выберите модель, рассмотрите корпус, охлаждение и видеокарту со всех сторон, включите подсветку. Потом соберём, прогоним стресс-тест и доставим.</p>
+    <div class="cta"><a class="btn" href="#showroom">Открыть 3D-витрину</a><a class="btn ghost" href="#order">Оставить заявку</a></div>
+    <ul class="badges mono"><li>Гарантия 3 года</li><li>Стресс-тест 24 часа</li><li>Рассрочка на <span data-installment></span> мес.</li><li>Trade-in старого ПК</li></ul>
+  </div>
+  <div class="art"><svg class="hero-art" viewBox="0 0 320 260" role="img" aria-label="Технический скетч корпуса с потоками воздуха"><use href="#sketch"/></svg></div>
+</section>
+
+<section class="sec" id="showroom">
+  <h2>3D-витрина сборок</h2>
+  <p class="sub">Вращайте, приближайте, переключайте режимы. Нажмите на «+» на модели, и мы расскажем, за что отвечает узел.</p>
+  <div class="showroom">
+    <div class="viewer" id="viewer">
+      <div class="hotspots"></div>
+      <div class="hs-card" id="hsCard" hidden></div>
+      <div class="loading mono" id="loading">Загружаем 3D…</div>
+      <div class="fallback" id="fallback" hidden>
+        <svg viewBox="0 0 320 260"><use href="#sketch"/></svg>
+        <p id="fbText"></p><div class="chips" id="fbChips"></div>
+      </div>
+      <div class="modes" role="group" aria-label="Режимы просмотра">
+        <button data-mode="studio" class="on">Студийный свет</button>
+        <button data-mode="neon">Неон и ARGB</button>
+        <button data-toggle="panel">Снять боковую панель</button>
+        <button data-toggle="air">Потоки воздуха</button>
+      </div>
+    </div>
+    <aside class="panel"><div class="tabs" id="tabs"></div><div id="info"></div></aside>
+  </div>
+</section>
+
+<section class="sec" id="tasks">
+  <h2>Подбор по задаче</h2>
+  <p class="sub">Выберите сценарий: подсветим подходящие сборки и подставим одну из них в заявку.</p>
+  <div class="tasks" id="taskList"></div>
+</section>
+
+<section class="sec" id="trust">
+  <h2>Что вы получаете вместе с ПК</h2>
+  <p class="sub">Не обещания, а процессы, которые можно проверить.</p>
+  <div class="trust">
+    <article class="card"><svg viewBox="0 0 200 110"><rect x="46" y="10" width="108" height="90" rx="8"/><circle cx="66" cy="32" r="9"/><circle cx="66" cy="56" r="9"/><circle cx="66" cy="80" r="9"/><circle cx="120" cy="48" r="14"/><rect x="92" y="72" width="52" height="18" rx="3"/><path class="flow" d="M4 32h34M4 56h34M4 80h34M156 30h40M156 56h40"/></svg><h3>Охлаждение и температуры</h3><p>Поток от фронта к тылу и замеры под нагрузкой. В паспорте сборки реальные градусы, а не обещания.</p></article>
+    <article class="card"><svg viewBox="0 0 200 110"><rect x="30" y="10" width="140" height="90" rx="8"/><path d="M50 92C50 60 90 70 90 40S130 40 150 18M58 92C58 66 98 76 98 46S138 46 158 24M66 92C66 72 106 82 106 52S146 52 166 30"/><path d="M72 64v10M110 54v10M132 38v10" stroke-width="4"/></svg><h3>Аккуратный кабель-менеджмент</h3><p>Жгуты идут по трассам, стяжки лежат в одной плоскости. Красиво за стеклом и не мешает воздуху.</p></article>
+    <article class="card"><svg viewBox="0 0 200 110"><path d="M20 94h170M20 94V14"/><path d="M20 24h170" stroke-dasharray="3 5" opacity=".5"/><path d="M20 84C50 46 70 36 92 38s40 4 98 2"/><text x="120" y="22" font-size="9" fill="currentColor" stroke="none" font-family="JetBrains Mono,monospace">предел 85 °C</text></svg><h3>Стресс-тест 24 часа</h3><p>Прогоняем процессор, видеокарту и игры. Отчёт с температурами и частотами кладём в коробку.</p></article>
+    <article class="card"><svg viewBox="0 0 200 110"><rect x="40" y="38" width="76" height="34" rx="5"/><circle cx="62" cy="55" r="9"/><circle cx="94" cy="55" r="9"/><path d="M130 36a28 28 0 0 1 44 10M174 46l1-12m-1 12l-12 0M170 74a28 28 0 0 1-44-10M126 64l-1 12m1-12l12 0"/></svg><h3>Trade-in и апгрейд</h3><p>Сдайте старую видеокарту или ПК в зачёт. Через пару лет заменим ключевые узлы со скидкой.</p></article>
+  </div>
+</section>
+
+<section class="sec" id="order">
+  <h2>Заявка на сборку</h2>
+  <p class="sub">Модель и задачу мы уже подставили. Менеджер свяжется в течение 30 минут.</p>
+  <form class="card form" id="orderForm" novalidate>
+    <div class="f"><label for="fName">Имя</label><input id="fName" name="name" autocomplete="name" placeholder="Например, Алия"><span class="err"></span></div>
+    <div class="f"><label for="fPhone">Телефон</label><input id="fPhone" name="phone" inputmode="tel" autocomplete="tel" placeholder="+7 700 000 00 00"><span class="err"></span></div>
+    <div class="f"><label for="fModel">Сборка</label><select id="fModel" name="model"></select><span class="err"></span></div>
+    <div class="f"><label for="fTask">Задача</label><select id="fTask" name="task"></select><span class="err"></span></div>
+    <div class="f full"><label for="fNote">Пожелания, необязательно</label><textarea id="fNote" name="note" rows="3" placeholder="Цвет корпуса, бюджет, периферия"></textarea></div>
+    <div class="full send"><button class="btn" type="submit">Отправить заявку</button><span class="mono" id="orderSum"></span></div>
+  </form>
+</section>
+</main>
+
+<footer><span>© 2026 PC Atelier. Сборка ПК на заказ.</span><span class="mono">Цены и валюта: js/models-data.js</span></footer>
+<script type="module" src="ui.js"></script>
+</body>
+</html>
